@@ -1,0 +1,22 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.0",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nested-property": "^2.0.0",
+    "yup": "^0.28.3"
+  },
+  "scripts": {
+    "start": "nodemon --exec 'babel-node index.js' --debug"
+  }
+}
