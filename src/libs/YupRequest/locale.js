@@ -16,7 +16,7 @@ const translation = {
       trim: 'O campo "{{${path}}}" não deve conter espaços no início ou no fim.',
       lowercase: 'O campo "{{${path}}}" deve estar em maiúsculo',
       uppercase: 'O campo "{{${path}}}" deve estar em minúsculo',
-      cpf: 'O campo {{${path}}} é um CPF ruim'
+      //cpf: 'O campo {{${path}}} é um CPF ruim'
     },
     number: {
       min: 'O campo "{{${path}}}" deve ser no mínimo ${min}',
@@ -40,16 +40,16 @@ const translation = {
   
   yup.setLocale(translation);
 
-  yup.addMethod(yup.string, 'cpf', function (message = translation.string.cpf) {
+  // yup.addMethod(yup.string, 'cpf', function (message = translation.string.cpf) {
       
-      return this.test('cpf', message, function(value) {
-        const { path, createError } = this;        
-        if(value != '096.688.769-70'){
-            return createError({ path, message })
-        }
-        return true;
-      });
-  });
+  //     return this.test('cpf', message, function(value) {
+  //       const { path, createError } = this;        
+  //       if(value != '096.688.769-70'){
+  //           return createError({ path, message })
+  //       }
+  //       return true;
+  //     });
+  // });
 
 
   
