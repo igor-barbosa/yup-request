@@ -44,8 +44,8 @@ export default class YupRequest {
             if(error){
                 res.send({ error, data });
             } else {
-                const resp = (!!customValidation) ? customValidation(data, util) : { error : false };
-                if(resp.error){
+                const resp = (!!customValidation) ? await customValidation(data, util) : { error : false };
+                if(resp && resp.error){
                     res.send(resp);
                 } else {
                     req.body = data;
