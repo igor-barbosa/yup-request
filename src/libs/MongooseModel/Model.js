@@ -6,8 +6,8 @@ export default class Model {
 
     static table = null;
 
-    static export ({ model, schema }){    
-        model.table = model.name;    
+    static export ({ model, schema, table }){    
+        model.table = table || model.name;    
         model.db = mongoose.model(model.table, schema);    
         Object.defineProperties(model,{
             table: {
@@ -33,8 +33,9 @@ export default class Model {
     }
 
     static async delete(_id){
+        const data = await this.db.findOne({_id});
         await this.db.deleteOne({_id});
-        return await this.db.findOne({_id});
+        return data;
     }
 
     static async findById(_id){

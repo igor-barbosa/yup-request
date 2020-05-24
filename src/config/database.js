@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import ENVIRONMENT from '../../environment';
 
-mongoose.connect('mongodb://localhost:27017/myapp', {
+mongoose.connect(ENVIRONMENT.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });

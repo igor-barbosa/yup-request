@@ -23,6 +23,7 @@ export default class YupRequest {
                 errors: (data) => ({
                     error: true,
                     type: 'fields',
+                    status: 200,
                     data: data.map(fieldError => ({
                         path: fieldError.path,
                         value: nested.get(req.body,fieldError.path),
@@ -30,23 +31,27 @@ export default class YupRequest {
                         type: 'custom'
                     })) 
                 }),
-                errorText: (message) => {
+                errorText: (message, status = 400) => {
                     return {
                         error: true,
                         type: 'text',
-                        data: message
+                        data: message,
+                        status
                     }
                 }
             }
     
             const validate = new YupRequest(req.body, schema);    
-            const {error, data} = await validate.run();    
+            const {error, data, status} = await validate.run();    
+            
             if(error){
-                res.send({ error, data });
+                res.status(status).send({ error, data });
             } else {
-                const resp = (!!customValidation) ? await customValidation(data, util) : { error : false };
+                req.context = {};
+                const resp = (!!customValidation) ? await customValidation(data, util, req) : { error : false };
                 if(resp && resp.error){
-                    res.send(resp);
+                    const {status, ...errorData} = resp;
+                    res.status(status).send(errorData);
                 } else {
                     req.body = data;
                     next();
@@ -63,7 +68,8 @@ export default class YupRequest {
             });
             return {
                 error: false,
-                data
+                data,
+                status: 400
             }
         }catch(err){
 
@@ -92,7 +98,8 @@ export default class YupRequest {
 
             return {
                 error: true,
-                data : errors
+                data : errors,
+                status: 400
             }
         }
     }

@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
 import Model from '../../libs/MongooseModel/Model';
 
-class Usuarios extends Model {
+class User extends Model {
 
-    static async obterPeloEmail(email){
-        return this.db.findOne({ email });
+    static async getByEmail(email){
+        return this.db.findOne({ email }).lean();
     }
 
 }
 
 export default Model.export({
-    model: Usuarios,
+    model: User,
     schema: mongoose.Schema({
-        nome: String,
+        name: String,
         email: String,
-        senha: String
+        password: String
     })    
 })
